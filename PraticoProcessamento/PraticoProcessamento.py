@@ -1,49 +1,108 @@
-#!/usr/bin/python
-
-
-# Importacao de bibliotecas
 import cv2
 import numpy as np
+import copy
+import array
 
-# Abre a imagem
-# - cv2.IMREAD_COLOR
-# - cv2.IMREAD_GRAYSCALE
-# - cv2.IMREAD_UNCHANGED
+def limiarizacao(img1,lim):
+    img2 = copy.copy(img1)
+    linhas, colunas = img1.shape
+    for i in range(0, int(linhas)):
+	    for j in range(0, colunas):
+		    if img.item(i,j) <= lim:
+                    img.itemset((i,j),0)
+    cv2.imwrite('ativ1.png',img2) 
+    return img2;
+    
+def gamma(img1,gamma):
+    img2 = copy.copy(img1)
+    img2 = ajuste_gamma(img1, gamma=gamma)
+    cv2.imwrite('ativ2.png',img2)
+    return img2;
 
-#img = cv2.imread('a.jpg', cv2.IMREAD_COLOR)
-img = cv2.imread('img01-a.jpg', cv2.IMREAD_GRAYSCALE)
+def ajuste_gamma(image, gamma):
+   iGamma = 1.0 / gamma
+   tabela = np.array([((i / 255.0) ** iGamma) * 255
+      for i in np.arange(0, 256)]).astype("uint8")
+   return cv2.LUT(image, tabela);
 
-# Acesso a um pixel
-# Modo1: ineficiente
-#pixel = img[100, 100]
-#print(pixel)
+def negativo(img1):
+    img2 = copy.copy(img1)
+    linhas, colunas = img1.shape
+    for i in range(0, int(linhas)):
+	    for j in range(0, colunas):
+		    nega = 255 - img.item(i, j)
+            img2.itemset((i, j), nega)
+    cv2.imwrite('ativ3.png',img2)
+    return img2;
 
-# Modo2: eficiente
-print('Dimensao da imagem')
-print(img.shape)
+def fatiamento(img1,inthini,inthfim,intvini,intvfim):
+    img2 = img1[inthini:inthfim,intvini:intvfim]
+    cv2.imwrite('ativ4.png',img2)
+    return img2;
 
-print('Tamanho da imagem')
-print(img.size)
+#def media(img1,mask):
+#    img2 = copy.copy(img1)
+#    mascara = np.ones((mask),np.float32)/(mask*mask)
+#    linhas, colunas = img1.shape
+#        members=[source[0,0]]*9
+#    for y in range(1,len(source)-1):
+#        for x in range(1,y-1):
+#           members[0] = source[y-1,x-1]
+#            members[1] = source[y,x-1]
+#            members[2] = source[y+1,x-1]
+#            members[3] = source[y-1,x]
+#            members[4] = source[y,x]
+#            members[5] = source[y+1,x]
+#            members[6] = source[y-1,x+1]
+#            members[7] = source[y,x+1]
+#            members[8] = source[y+1,x+1]
+#
+#            members.sort()
+#            final[y,x]=members[4]
+#        for i in range(0, int(linhas)):
+#	        for j in range(0, colunas):
+#		        for o in range(i-size,i+size)
+#                    for p in range(j-size,j+size)
+#                        
+#    cv2.imwrite('ativ5.png',img2)
+#    return img2;
 
-linhas, colunas = img.shape
-print('linhas:  ' + str(linhas))
-print('colunas: ' + str(colunas))
+#def mediana(img1,mask):
+#    img2 = copy.copy(img1)
+#    cv2.imwrite('ativ6.png',img2)
+#    return img2;
 
-for i in range(0, int(linhas / 2)):
-	for j in range(0, colunas):
-		negativo = 255 - img.item(i, j)
-		img.itemset((i, j), negativo)
+#def min(img1,mask):
+#    img2 = copy.copy(img1)
+#   cv2.imwrite('ativ7.png',img2)
+#    return img2;
 
+#def max(img1,mask):
+#    img2 = copy.copy(img1)
+#    cv2.imwrite('ativ8.png',img2)
+#    return img2;
 
+def show(img1,img2):
+    cv2.imshow('original',img)
+    cv2.imshow('modificado',img2)
+    k = cv2.waitKey(0)
+    if k == 27:
+        cv2.destroyAllWindows()
+    return
 
-
-
-# Exibe a imagem na tela
-cv2.imshow('imagem', img)
-cv2.imwrite('negativo.png', img)
-
-# Espera alguma tecla
-tecla = cv2.waitKey(0)
-
-# tecla 27 = ESC
-cv2.destroyAllWindows()
+img = cv2.imread('img01-a.png',cv2.IMREAD_COLOR)
+lim = 50
+gamma = 0.5
+inthini = 60
+inthfim = 200
+intvfim = 200
+infvini = 60
+mask = 3
+show(img,limiarizacao(img,lim))
+show(img,gamma(img,gamma))
+show(img,negativo(img))
+show(img,fatiamento(img,inthini,inthfim,intvini,intvfim))
+show(img,media(img,mask)
+show(img,mediana(img,mask))
+show(img,max(img,mask))
+show(img,min(img,mask))
