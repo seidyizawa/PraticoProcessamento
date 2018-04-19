@@ -7,21 +7,21 @@ def limiarizacao(img1,lim):
     img2 = copy.copy(img1)
     for i in range(0, img1.shape[0]-1):
         for j in range(0, img1.shape[1]-1):
-            if img1.item(i,j) <= lim:
-                img2.itemset((i,j),0)
+            if img1.item(i,j,0) >= lim:
+                img2[i,j] = 0
     cv2.imwrite('ativ1.png',img2) 
     return img2;
     
 def gamma(img1,gamma):
-    img2 = copy.copy(img1)
-    img2 = gamma_c(img1, gamma)
+    img2 = adjust_gamma(original, gamma)
     cv2.imwrite('ativ2.png',img2)
     return img2;
 
-def gamma_c(img, correction):
-    img = img/255.0
-    img = cv2.pow(img, correction)
-    return np.uint8(img*255)
+def gamma(image, gammma):
+   invGamma = 1.0 / gammma
+   table = np.array([((i / 255.0) ** invGamma) * 255
+      for i in np.arange(0, 256)]).astype("uint8")
+   return cv2.LUT(image, table)
 
 def negativo(img1):
     img2 = copy.copy(img1)
@@ -107,14 +107,14 @@ def show(img1,img2):
 
 img = cv2.imread('img02-a.jpg',cv2.IMREAD_COLOR)
 lim = 50
-gamma = 2.0
+gamma = 0.5
 inthini = 60
 inthfim = 200
 intvfim = 200
 intvini = 60
 mask = 4
-#show(img,limiarizacao(img,lim))
-#show(img,gamma)
+show(img,limiarizacao(img,lim))
+show(img,gamma)
 show(img,negativo(img))
 show(img,fatiamento(img,inthini,inthfim,intvini,intvfim))
 show(img,media(img,mask))
