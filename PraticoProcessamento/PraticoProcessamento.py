@@ -7,7 +7,8 @@ def limiarizacao(img1,lim):
     img2 = copy.copy(img1)
     for i in range(0, img1.shape[0]-1):
         for j in range(0, img1.shape[1]-1):
-            if img1.item(i,j) <= lim:
+            co = img1.item(i,j)
+            if co <= lim:
                 img2.itemset((i,j),0)
     cv2.imwrite('ativ1.png',img2) 
     return img2;
