@@ -42,11 +42,11 @@ def media(img1,mask):
     img2 = copy.copy(img1)
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
-    for i in range(0, img1.shape[0]-1):
-        for j in range(0, img1.shape[1]-1):
+    for i in range(mask, img1.shape[0]-1):
+        for j in range(mask, img1.shape[1]-1):
             for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
-                   masc.extend([img1[y,x]*img[i,j]])
+                   masc.extend(img1[y,x])
             img2[i,j] = np.mean(masc)
             masc = []
     cv2.imwrite('ativ5.png',img2)
@@ -57,11 +57,11 @@ def mediana(img1,mask):
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     linhas, colunas = img1.shape
-    for i in range(0, img1.shape[0]-1):
-        for j in range(0, img1.shape[1]-1):
+    for i in range(mask, img1.shape[0]-1):
+        for j in range(mask, img1.shape[1]-1):
             for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
-                   masc.extend([img1[y,x]*img[i,j]])
+                   masc.extend(img1[y,x])
             masc.sort()
             img2[i,j] = masc[mask*mask/2]
             masc = []
@@ -72,11 +72,11 @@ def min(img1,mask):
     img2 = copy.copy(img1)
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
-    for i in range(0, img1.shape[0]-1):
-        for j in range(0, img1.shape[1]-1):
+    for i in range(mask, img1.shape[0]-1):
+        for j in range(mask, img1.shape[1]-1):
             for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
-                   masc.extend([img1[y,x]*img[i,j]])
+                   masc.extend(img1[y,x])
             masc.sort()
             img2[i,j] = masc[0]
             masc = []
@@ -87,11 +87,11 @@ def max(img1,mask):
     img2 = copy.copy(img1)
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
-    for i in range(0, img1.shape[0]-1):
-        for j in range(0, img1.shape[1]-1):
+    for i in range(mask, img1.shape[0]-1):
+        for j in range(mask, img1.shape[1]-1):
             for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
-                   masc.extend([img1[y,x]*img[i,j]])
+                   masc.extend(img1[y,x])
             masc.sort()
             masc.reverse()
             img2[i,j] = masc[0]
