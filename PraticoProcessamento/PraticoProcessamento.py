@@ -14,18 +14,14 @@ def limiarizacao(img1,lim):
     
 def gamma(img1,gamma):
     img2 = copy.copy(img1)
-    for i in range(0, img1.shape[0]-1):
-        for j in range(0, img1.shape[1]-1):
-            gam = gamma ** img1[i, j]
-            img2[i,j] = gam
+    img2 = gamma_c(img1, gamma)
     cv2.imwrite('ativ2.png',img2)
     return img2;
 
-#def ajuste_gamma(image, gamma):
-#   iGamma = 1.0 / gamma
-#   tabela = np.array([((i / 255.0) ** iGamma) * 255
-#      for i in np.arange(0, 256)]).astype("uint8")
-#   return cv2.LUT(image, tabela);
+def gamma_c(img, correction):
+    img = img/255.0
+    img = cv2.pow(img, correction)
+    return np.uint8(img*255)
 
 def negativo(img1):
     img2 = copy.copy(img1)
@@ -116,9 +112,9 @@ inthini = 60
 inthfim = 200
 intvfim = 200
 intvini = 60
-mask = 3
+mask = 4
 #show(img,limiarizacao(img,lim))
-show(img,gamma)
+#show(img,gamma)
 show(img,negativo(img))
 show(img,fatiamento(img,inthini,inthfim,intvini,intvfim))
 show(img,media(img,mask))
