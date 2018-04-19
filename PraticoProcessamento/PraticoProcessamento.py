@@ -97,14 +97,14 @@ def show(img1,img2):
         cv2.destroyAllWindows()
     return
 
-img = cv2.imread('img02-a.jpg',cv2.IMREAD_COLOR)
-lim = 50
-ggamma = 2.0
-inthini = 60
-inthfim = 200
-intvfim = 200
-intvini = 60
-mask = 3
+img = cv2.imread('img02-a.jpg',cv2.IMREAD_COLOR) #imagem
+lim = 50 #valor da limiar
+ggamma = 2.0 #valor da gamma
+inthini = 60 #inicio do intervalo horizontal
+inthfim = 200 #final do intervalo horizontal
+intvfim = 200 #inicio do intervalo vertical
+intvini = 60 #final do intervalo vertical
+mask = 3 #tamanho da mascara
 show(img,limiarizacao(img,lim))
 show(img,gamma(img,ggamma))
 show(img,negativo(img))
