@@ -97,7 +97,7 @@ def show(img1,img2):
         cv2.destroyAllWindows()
     return
 
-img = cv2.imread('img02-a.jpg',cv2.IMREAD_COLOR) #imagem
+img = cv2.imread('img03-a.jpg',cv2.IMREAD_COLOR) #imagem
 lim = 50 #valor da limiar
 ggamma = 2.0 #valor da gamma
 inthini = 60 #inicio do intervalo horizontal
