@@ -13,15 +13,11 @@ def limiarizacao(img1,lim):
     return img2;
     
 def gamma(img1,gamma):
-    img2 = adjust_gamma(original, gamma)
-    cv2.imwrite('ativ2.png',img2)
-    return img2;
-
-def gamma(image, gammma):
-   invGamma = 1.0 / gammma
-   table = np.array([((i / 255.0) ** invGamma) * 255
-      for i in np.arange(0, 256)]).astype("uint8")
-   return cv2.LUT(image, table)
+    img1 = img1/255.0
+    img1 = cv2.pow(img1, gamma)
+    img2 = np.uint8(img1*255)
+    cv2.imwrite('ativ2.png',img2) 
+    return img2
 
 def negativo(img1):
     img2 = copy.copy(img1)
@@ -40,7 +36,6 @@ def fatiamento(img1,inthini,inthfim,intvini,intvfim):
 def media(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     for i in range(mask, img1.shape[0]-1):
         for j in range(mask, img1.shape[1]-1):
             for y in range(i-mask/2,i+mask/2):
@@ -54,7 +49,6 @@ def media(img1,mask):
 def mediana(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     for i in range(mask, img1.shape[0]-1):
         for j in range(mask, img1.shape[1]-1):
             for y in range(i-mask/2,i+mask/2):
@@ -69,7 +63,6 @@ def mediana(img1,mask):
 def min(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     for i in range(mask, img1.shape[0]-1):
         for j in range(mask, img1.shape[1]-1):
             for y in range(i-mask/2,i+mask/2):
@@ -84,7 +77,6 @@ def min(img1,mask):
 def max(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     for i in range(mask, img1.shape[0]-1):
         for j in range(mask, img1.shape[1]-1):
             for y in range(i-mask/2,i+mask/2):
@@ -107,14 +99,14 @@ def show(img1,img2):
 
 img = cv2.imread('img02-a.jpg',cv2.IMREAD_COLOR)
 lim = 50
-gamma = 0.5
+ggamma = 2.0
 inthini = 60
 inthfim = 200
 intvfim = 200
 intvini = 60
-mask = 4
+mask = 3
 show(img,limiarizacao(img,lim))
-show(img,gamma)
+show(img,gamma(img,ggamma))
 show(img,negativo(img))
 show(img,fatiamento(img,inthini,inthfim,intvini,intvfim))
 show(img,media(img,mask))
