@@ -5,11 +5,10 @@ import array
 
 def limiarizacao(img1,lim):
     img2 = copy.copy(img1)
-    linhas, colunas = img1.shape
-    for i in range(0, int(linhas)):
-        for j in range(0, colunas):
-            if img1.item(i,j) <= lim:
-                img1.itemset((i,j),0)
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            if img1[i,j] <= lim:
+                img2[i,j] = 0
     cv2.imwrite('ativ1.png',img2) 
     return img2;
     
@@ -27,11 +26,10 @@ def ajuste_gamma(image, gamma):
 
 def negativo(img1):
     img2 = copy.copy(img1)
-    linhas, colunas = img1.shape
-    for i in range(0, int(linhas)):
-        for j in range(0, colunas):
-            nega = 255 - img.item(i, j)
-            img2.itemset((i, j), nega)
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            nega = 255 - img1[i, j]
+            img2[i,j] = nega
     cv2.imwrite('ativ3.png',img2)
     return img2;
 
@@ -44,10 +42,9 @@ def media(img1,mask):
     img2 = copy.copy(img1)
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
-    linhas, colunas = img1.shape
-        for i in range(0, (linhas)):
-            for j in range(0, colunas):
-              for y in range(y-mask/2,y+mask/2):
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
                    masc.extend([img1[y,x]*img[i,j]])
             img2[i,j] = np.mean(masc)
@@ -60,9 +57,9 @@ def mediana(img1,mask):
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     linhas, colunas = img1.shape
-        for i in range(0, int(linhas)):
-	        for j in range(0, colunas):
-              for y in range(y-mask/2,y+mask/2):
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
                    masc.extend([img1[y,x]*img[i,j]])
             masc.sort()
@@ -75,10 +72,9 @@ def min(img1,mask):
     img2 = copy.copy(img1)
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
-    linhas, colunas = img1.shape
-        for i in range(0, int(linhas)):
-	        for j in range(0, colunas):
-              for y in range(y-mask/2,y+mask/2):
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
                    masc.extend([img1[y,x]*img[i,j]])
             masc.sort()
@@ -91,10 +87,9 @@ def max(img1,mask):
     img2 = copy.copy(img1)
     masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
-    linhas, colunas = img1.shape
-        for i in range(0, int(linhas)):
-	        for j in range(0, colunas):
-              for y in range(y-mask/2,y+mask/2):
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(y-mask/2,y+mask/2):
                 for x in range(x-mask/2,x+mask/2):
                    masc.extend([img1[y,x]*img[i,j]])
             masc.sort()
@@ -124,7 +119,7 @@ show(img,limiarizacao(img,lim))
 show(img,gamma(img,gamma))
 show(img,negativo(img))
 show(img,fatiamento(img,inthini,inthfim,intvini,intvfim))
-show(img,media(img,mask)
+show(img,media(img,mask))
 show(img,mediana(img,mask))
 show(img,max(img,mask))
 show(img,min(img,mask))
