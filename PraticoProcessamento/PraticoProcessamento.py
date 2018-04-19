@@ -14,7 +14,7 @@ def limiarizacao(img1,lim):
     
 def gamma(img1,gamma):
     img1 = img1/255.0
-    img1 = cv2.pow(img1, gamma)
+    img1 = img1**gamma
     img2 = np.uint8(img1*255)
     cv2.imwrite('ativ2.png',img2) 
     return img2
@@ -97,7 +97,7 @@ def show(img1,img2):
         cv2.destroyAllWindows()
     return
 
-img = cv2.imread('img03-a.jpg',cv2.IMREAD_COLOR) #imagem
+img = cv2.imread('img02.png',cv2.IMREAD_COLOR) #imagem
 lim = 50 #valor da limiar
 ggamma = 2.0 #valor da gamma
 inthini = 60 #inicio do intervalo horizontal
