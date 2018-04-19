@@ -7,9 +7,9 @@ def limiarizacao(img1,lim):
     img2 = copy.copy(img1)
     linhas, colunas = img1.shape
     for i in range(0, int(linhas)):
-	    for j in range(0, colunas):
-		    if img.item(i,j) <= lim:
-                    img.itemset((i,j),0)
+        for j in range(0, colunas):
+            if img1.item(i,j) <= lim:
+                img1.itemset((i,j),0)
     cv2.imwrite('ativ1.png',img2) 
     return img2;
     
@@ -29,8 +29,8 @@ def negativo(img1):
     img2 = copy.copy(img1)
     linhas, colunas = img1.shape
     for i in range(0, int(linhas)):
-	    for j in range(0, colunas):
-		    nega = 255 - img.item(i, j)
+        for j in range(0, colunas):
+            nega = 255 - img.item(i, j)
             img2.itemset((i, j), nega)
     cv2.imwrite('ativ3.png',img2)
     return img2;
@@ -42,72 +42,67 @@ def fatiamento(img1,inthini,inthfim,intvini,intvfim):
 
 def media(img1,mask):
     img2 = copy.copy(img1)
+    masc = []
     mascara = np.ones((mask,mask),np.float32)/(mask*mask)
     linhas, colunas = img1.shape
-        for i in range(0, int(linhas)):
-	        for j in range(0, colunas):
-              img2[i,j] = (media/(mask*mask))
+        for i in range(0, (linhas)):
+            for j in range(0, colunas):
+              for y in range(y-mask/2,y+mask/2):
+                for x in range(x-mask/2,x+mask/2):
+                   masc.extend([img1[y,x]*img[i,j]])
+            img2[i,j] = np.mean(masc)
+            masc = []
     cv2.imwrite('ativ5.png',img2)
     return img2;
 
 def mediana(img1,mask):
     img2 = copy.copy(img1)
-    members=[source[0,0]]*(mask*mask)
-    for y in range(1,source.shape[0]-1):
-        for x in range(1,source.shape[1]-1):
-            members[0] = source[y-1,x-1]
-            members[1] = source[y,x-1]
-            members[2] = source[y+1,x-1]
-            members[3] = source[y-1,x]
-            members[4] = source[y,x]
-            members[5] = source[y+1,x]
-            members[6] = source[y-1,x+1]
-            members[7] = source[y,x+1]
-            members[8] = source[y+1,x+1]
-            members.sort()
-            img2[y,x]=members[mask*mask/2]
+    masc = []
+    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
+    linhas, colunas = img1.shape
+        for i in range(0, int(linhas)):
+	        for j in range(0, colunas):
+              for y in range(y-mask/2,y+mask/2):
+                for x in range(x-mask/2,x+mask/2):
+                   masc.extend([img1[y,x]*img[i,j]])
+            masc.sort()
+            img2[i,j] = masc[mask*mask/2]
+            masc = []
     cv2.imwrite('ativ6.png',img2)
     return img2;
 
 def min(img1,mask):
     img2 = copy.copy(img1)
-    members=[source[0,0]]*(mask*mask)
-    for y in range(1,source.shape[0]-1):
-        for x in range(1,source.shape[1]-1):
-            members[0] = source[y-1,x-1]
-            members[1] = source[y,x-1]
-            members[2] = source[y+1,x-1]
-            members[3] = source[y-1,x]
-            members[4] = source[y,x]
-            members[5] = source[y+1,x]
-            members[6] = source[y-1,x+1]
-            members[7] = source[y,x+1]
-            members[8] = source[y+1,x+1]
-            members.sort()
-            img2[y,x]=members.index
+    masc = []
+    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
+    linhas, colunas = img1.shape
+        for i in range(0, int(linhas)):
+	        for j in range(0, colunas):
+              for y in range(y-mask/2,y+mask/2):
+                for x in range(x-mask/2,x+mask/2):
+                   masc.extend([img1[y,x]*img[i,j]])
+            masc.sort()
+            img2[i,j] = masc[0]
+            masc = []
     cv2.imwrite('ativ7.png',img2)
     return img2;
 
-#def max(img1,mask):
-#    img2 = copy.copy(img1)
-    members=[source[0,0]]*(mask*mask)
-    for y in range(1,source.shape[0]-1):
-        for x in range(1,source.shape[1]-1):
-            members[0] = source[y-1,x-1]
-            members[1] = source[y,x-1]
-            members[2] = source[y+1,x-1]
-            members[3] = source[y-1,x]
-            members[4] = source[y,x]
-            members[5] = source[y+1,x]
-            members[6] = source[y-1,x+1]
-            members[7] = source[y,x+1]
-            members[8] = source[y+1,x+1]
-
-            members.sort()
-            members.reverse()
-            img2[y,x]=members.index
-#    cv2.imwrite('ativ8.png',img2)
-#    return img2;
+def max(img1,mask):
+    img2 = copy.copy(img1)
+    masc = []
+    mascara = np.ones((mask,mask),np.float32)/(mask*mask)
+    linhas, colunas = img1.shape
+        for i in range(0, int(linhas)):
+	        for j in range(0, colunas):
+              for y in range(y-mask/2,y+mask/2):
+                for x in range(x-mask/2,x+mask/2):
+                   masc.extend([img1[y,x]*img[i,j]])
+            masc.sort()
+            masc.reverse()
+            img2[i,j] = masc[0]
+            masc = []
+    cv2.imwrite('ativ8.png',img2)
+    return img2;
 
 def show(img1,img2):
     cv2.imshow('original',img)
