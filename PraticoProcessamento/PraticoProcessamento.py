@@ -14,7 +14,10 @@ def limiarizacao(img1,lim):
     
 def gamma(img1,gamma):
     img2 = copy.copy(img1)
-    img2 = ajuste_gamma(img1, gamma)
+    iGamma = 1.0 / gamma
+    tabela = np.array([((i / 255.0) ** iGamma) * 255
+      for i in np.arange(0, 256)]).astype("uint8")
+    img2 = cv2.LUT(image, tabela)
     cv2.imwrite('ativ2.png',img2)
     return img2;
 
