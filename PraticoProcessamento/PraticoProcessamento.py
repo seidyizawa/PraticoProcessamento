@@ -108,7 +108,7 @@ inthini = 60 #inicio do intervalo horizontal
 inthfim = 200 #final do intervalo horizontal
 intvfim = 200 #inicio do intervalo vertical
 intvini = 60 #final do intervalo vertical
-mask = 7 #tamanho da mascara
+mask = 3 #tamanho da mascara
 show(img,limiarizacao(img,lim))
 show(img,gamma(img,ggamma))
 show(img,negativo(img))
