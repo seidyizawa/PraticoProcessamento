@@ -9,6 +9,10 @@ def limiarizacao(img1,lim):
         for j in range(0, img1.shape[1]-1):
             if img1.item(i,j,0) >= lim:
                 img2[i,j] = 0
+            if img1.item(i,j,1) >= lim:
+                img2[i,j] = 0
+            if img1.item(i,j,2) >= lim:
+                img2[i,j] = 0
     cv2.imwrite('ativ1.png',img2) 
     return img2;
     
@@ -36,11 +40,11 @@ def fatiamento(img1,inthini,inthfim,intvini,intvfim):
 def media(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    for i in range(mask, img1.shape[0]-1):
-        for j in range(mask, img1.shape[1]-1):
-            for y in range(i-mask/2,i+mask/2):
-                for x in range(j-mask/2,j+mask/2):
-                   masc.extend(img1[y,x])
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(i-mask/2,i+mask/2-1):
+                for x in range(j-mask/2,j+mask/2-1):
+                   masc.append(img1.item(y,x,0))
             img2[i,j] = np.mean(masc)
             masc = []
     cv2.imwrite('ativ5.png',img2)
@@ -49,11 +53,11 @@ def media(img1,mask):
 def mediana(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    for i in range(mask, img1.shape[0]-1):
-        for j in range(mask, img1.shape[1]-1):
-            for y in range(i-mask/2,i+mask/2):
-                for x in range(j-mask/2,j+mask/2):
-                   masc.extend(img1[y,x])
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(i-mask/2,i+mask/2-1):
+                for x in range(j-mask/2,j+mask/2-1):
+                   masc.append(img1.item(y,x,0))
             masc.sort()
             img2[i,j] = masc[mask*mask/2]
             masc = []
@@ -63,11 +67,11 @@ def mediana(img1,mask):
 def min(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    for i in range(mask, img1.shape[0]-1):
-        for j in range(mask, img1.shape[1]-1):
-            for y in range(i-mask/2,i+mask/2):
-                for x in range(j-mask/2,j+mask/2):
-                   masc.extend(img1[y,x])
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(i-mask/2,i+mask/2-1):
+                for x in range(j-mask/2,j+mask/2-1):
+                   masc.append(img1.item(y,x,0))
             masc.sort()
             img2[i,j] = masc[0]
             masc = []
@@ -77,11 +81,11 @@ def min(img1,mask):
 def max(img1,mask):
     img2 = copy.copy(img1)
     masc = []
-    for i in range(mask, img1.shape[0]-1):
-        for j in range(mask, img1.shape[1]-1):
-            for y in range(i-mask/2,i+mask/2):
-                for x in range(j-mask/2,j+mask/2):
-                   masc.extend(img1[y,x])
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            for y in range(i-mask/2,i+mask/2-1):
+                for x in range(j-mask/2,j+mask/2-1):
+                    masc.append(img1.item(y,x,0))
             masc.sort()
             masc.reverse()
             img2[i,j] = masc[0]
@@ -90,7 +94,7 @@ def max(img1,mask):
     return img2;
 
 def show(img1,img2):
-    cv2.imshow('original',img)
+    cv2.imshow('original',img1)
     cv2.imshow('modificado',img2)
     k = cv2.waitKey(0)
     if k == 27:
@@ -104,7 +108,7 @@ inthini = 60 #inicio do intervalo horizontal
 inthfim = 200 #final do intervalo horizontal
 intvfim = 200 #inicio do intervalo vertical
 intvini = 60 #final do intervalo vertical
-mask = 3 #tamanho da mascara
+mask = 7 #tamanho da mascara
 show(img,limiarizacao(img,lim))
 show(img,gamma(img,ggamma))
 show(img,negativo(img))
