@@ -32,9 +32,23 @@ def negativo(img1):
     cv2.imwrite('ativ3.png',img2)
     return img2;
 
-def fatiamento(img1,inthini,inthfim,intvini,intvfim):
-    img2 = img1[inthini:inthfim,intvini:intvfim]
-    cv2.imwrite('ativ4.png',img2)
+def fatiamento(img1,intini,intfim):
+    img2 = copy.copy(img1)
+    for i in range(0, img1.shape[0]-1):
+        for j in range(0, img1.shape[1]-1):
+            if img1.item(i,j,0) >= intfim:
+                img2[i,j] = 0
+            if img1.item(i,j,1) >= intfim:
+                img2[i,j] = 0
+            if img1.item(i,j,2) >= intfim:
+                img2[i,j] = 0
+            if img1.item(i,j,0) <= intini:
+                img2[i,j] = 0
+            if img1.item(i,j,1) <= intini:
+                img2[i,j] = 0
+            if img1.item(i,j,2) <= intini:
+                img2[i,j] = 0
+    cv2.imwrite('ativ1.png',img2) 
     return img2;
 
 def media(img1,mask):
@@ -104,15 +118,13 @@ def show(img1,img2):
 img = cv2.imread('img02.png',cv2.IMREAD_COLOR) #imagem
 lim = 50 #valor da limiar
 ggamma = 2.0 #valor da gamma
-inthini = 60 #inicio do intervalo horizontal
-inthfim = 200 #final do intervalo horizontal
-intvfim = 200 #inicio do intervalo vertical
-intvini = 60 #final do intervalo vertical
-mask = 7 #tamanho da mascara
+intini = 60 #inicio do intervalo
+intfim = 200 #final do intervalo
+mask = 3 #tamanho da mascara
 show(img,limiarizacao(img,lim))
 show(img,gamma(img,ggamma))
 show(img,negativo(img))
-show(img,fatiamento(img,inthini,inthfim,intvini,intvfim))
+show(img,fatiamento(img,intini,intfim))
 show(img,media(img,mask))
 show(img,mediana(img,mask))
 show(img,max(img,mask))
