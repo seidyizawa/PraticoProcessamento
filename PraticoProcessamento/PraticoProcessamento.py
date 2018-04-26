@@ -118,8 +118,15 @@ def show(img1,img2):
 img = cv2.imread('img02.png',cv2.IMREAD_COLOR) #imagem
 lim = 50 #valor da limiar
 ggamma = 2.0 #valor da gamma
+<<<<<<< HEAD
 intini = 60 #inicio do intervalo
 intfim = 200 #final do intervalo
+=======
+inthini = 60 #inicio do intervalo horizontal
+inthfim = 200 #final do intervalo horizontal
+intvfim = 200 #inicio do intervalo vertical
+intvini = 60 #final do intervalo vertical
+>>>>>>> 3a000f2c95bf94d436b2c415b010ef0ad192f855
 mask = 3 #tamanho da mascara
 show(img,limiarizacao(img,lim))
 show(img,gamma(img,ggamma))
