@@ -48,7 +48,7 @@ def fatiamento(img1,intini,intfim):
                 img2[i,j] = 0
             if img1.item(i,j,2) <= intini:
                 img2[i,j] = 0
-    cv2.imwrite('ativ1.png',img2) 
+    cv2.imwrite('ativ4.png',img2) 
     return img2;
 
 def media(img1,mask):
